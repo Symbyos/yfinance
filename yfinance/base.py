@@ -204,7 +204,8 @@ class TickerBase:
             data = get_fn(
                 url=url,
                 params=params,
-                timeout=timeout
+                timeout=timeout,
+                proxy=proxy
             )
             if "Will be right back" in data.text or data is None:
                 raise RuntimeError("*** YAHOO! FINANCE IS CURRENTLY DOWN! ***\n"
