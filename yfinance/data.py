@@ -199,7 +199,7 @@ class TickerData:
     def _get_proxy(self, proxy):
         # setup proxy in requests format
         if proxy is not None:
-            if isinstance(proxy, dict) and "https" in proxy:
+            if (isinstance(proxy, dict) or isinstance(proxy, frozendict)) and "https" in proxy:
                 proxy = proxy["https"]
             proxy = {"https": proxy}
         return proxy
