@@ -49,9 +49,10 @@ _ROOT_URL_ = 'https://finance.yahoo.com'
 
 
 class TickerBase:
-    def __init__(self, ticker, session=None):
+    def __init__(self, ticker, session=None, proxy=None):
         self.ticker = ticker.upper()
         self.session = session
+        self.proxy = proxy
         self._history = None
         self._history_metadata = None
         self._base_url = _BASE_URL_
@@ -69,9 +70,9 @@ class TickerBase:
 
         # accept isin as ticker
         if utils.is_isin(self.ticker):
-            self.ticker = utils.get_ticker_by_isin(self.ticker, None, session)
+            self.ticker = utils.get_ticker_by_isin(self.ticker, proxy, session)
 
-        self._data: TickerData = TickerData(self.ticker, session=session)
+        self._data: TickerData = TickerData(self.ticker, session=session, proxy=proxy)
 
         self._analysis = Analysis(self._data)
         self._holders = Holders(self._data)

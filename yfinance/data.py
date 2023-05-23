@@ -177,16 +177,17 @@ class TickerData:
     user_agent_headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
-    def __init__(self, ticker: str, session=None):
+    def __init__(self, ticker: str, session=None, proxy=None):
         self.ticker = ticker
         self._session = session or requests
+        self._proxy = proxy
 
     def get(self, url, user_agent_headers=None, params=None, proxy=None, timeout=30):
         proxy = self._get_proxy(proxy)
         response = self._session.get(
             url=url,
             params=params,
-            proxies=proxy,
+            proxies=proxy or self._proxy,
             timeout=timeout,
             headers=user_agent_headers or self.user_agent_headers)
         return response
